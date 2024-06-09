@@ -15,7 +15,7 @@ export const RecordForm = () => {
   }
 
   return (
-    <div className="row record-form" onSubmit={handleSubmit(onSubmit)}>
+    <div className="row record-form mt-5" onSubmit={handleSubmit(onSubmit)}>
       <form>
         <p className='fw-bold mt-2'>Add Record</p>
         <div className="col-md-12 mt-3">
