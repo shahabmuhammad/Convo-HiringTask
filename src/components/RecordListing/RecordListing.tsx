@@ -10,6 +10,7 @@ export const RecordListing = () => {
     const [sortBy, setSortBy] = useState<'date' | 'upvotes'>('upvotes')
 
 
+
     const filteredRecords = recordContext?.recordState.records?.filter((record) => {
         const searchTextLower = searchTerm.toLowerCase();
         return (
@@ -68,6 +69,7 @@ export const RecordListing = () => {
                         records={filteredRecords}
                         searchTerm={searchTerm}
                         sortBy={sortBy}
+                        setSelectedRecord={recordContext?.setSelectedRecord!}
                     />
                 </div>
             </div>

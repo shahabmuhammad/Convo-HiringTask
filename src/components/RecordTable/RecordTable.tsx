@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IRecord } from '../../models/Record.model';
+import { RecordContext } from '../../App';
 
-export const RecordTable: React.FC<{ records: IRecord[] | undefined; searchTerm: string; sortBy: string }> = ({ records, searchTerm, sortBy }) => {
+interface RecordTableProps {
+    records: IRecord[] | undefined;
+    searchTerm: string;
+    sortBy: 'date' | 'upvotes';
+    setSelectedRecord: (record: IRecord | null) => void; // Function to update selected record
+}
+
+export const RecordTable: React.FC<RecordTableProps> = ({ records, searchTerm, sortBy, setSelectedRecord }) => {
     const sortedRecords = records?.slice().sort((a, b) => {
         switch (sortBy) {
-            case 'title':
-                return a.title.localeCompare(b.title);
             case 'upvotes':
                 return b.upvotes - a.upvotes; 
             case 'date':
@@ -14,6 +20,10 @@ export const RecordTable: React.FC<{ records: IRecord[] | undefined; searchTerm:
                 return 0;
         }
     });
+
+    const handleEditClick = (record:IRecord) => {
+        setSelectedRecord(record); 
+    };
 
     return (
         <table className="table">
@@ -34,7 +44,7 @@ export const RecordTable: React.FC<{ records: IRecord[] | undefined; searchTerm:
                             <td>{record.date}</td>
                             <td>
                                 <button type="button" className="btn btn-success btn-sm">View</button>
-                                <button type="button" className="btn btn-primary btn-sm mx-2">Edit</button>
+                                <button type="button" className="btn btn-primary btn-sm mx-2" onClick={() => handleEditClick(record)}>Edit</button>
                                 <button type="button" className="btn btn-danger btn-sm">Delete</button>
                             </td>
                         </tr>

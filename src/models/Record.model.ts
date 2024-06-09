@@ -12,6 +12,8 @@ export interface IRecordState {
 export interface IRecordContext {
     recordState: IRecordState;
     recordDispatch: React.Dispatch<any>;
+    selectedRecord: IRecord | null; // Add this property
+    setSelectedRecord: (record: IRecord | null) => void;
 }
 
 export const ACTIONS = {
