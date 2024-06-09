@@ -1,0 +1,15 @@
+:root {
+  margin: 1%;
+  background-color: #fcfcfc;
+}
+
+.btn-success {
+  background-color: #00a233;
+  border-color: #00a233;
+}
+
+.btn-success:hover,
+.btn-success:active {
+  background-color: #00a233;
+  border-color: #00a233;
+}
