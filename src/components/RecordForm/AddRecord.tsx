@@ -1,16 +1,25 @@
-import './RecordForm.css'
+import './AddRecord.css'
 import { useForm } from 'react-hook-form'
-import { IRecordForm } from '../../models/RecordForm.model'
+import { IRecord } from '../../models/Record.model'
+import { RecordContext } from '../../App'
+import { useContext, useState } from 'react'
 
 
-export const RecordForm = () => {
+export const AddRecord = () => {
+  const recordContext = useContext(RecordContext)
+  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<IRecord>()
+  const [isloading, setIsloading] = useState<boolean>(false)
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<IRecordForm>()
-
-
-  const onSubmit = (data: IRecordForm) => {
+  const onSubmit = (data: IRecord) => {
+    setIsloading(true)
     if (isValid) {
-      console.log('Form submitted', data);
+      data = { ...data, id: Date.now() }
+      recordContext?.recordDispatch({ type: 'ADD_RECORD', payload: data })
+      setIsloading(false)
+      reset()
+    }
+    else {
+      setIsloading(false)
     }
   }
 
@@ -32,7 +41,7 @@ export const RecordForm = () => {
           <input type="date" className="form-control form-control-lg" placeholder='Enter Date' {...register('date', { required: true })} />
           {errors.date?.type == 'required' && <p className='text-danger'>Date field is required.</p>}
         </div>
-        <button className="btn btn-success btn-lg fw-bold col-12 mt-3 mb-3" type='submit' >Add Data</button>
+        <button className="btn btn-success btn-lg fw-bold col-12 mt-3 mb-3" type='submit' >{isloading ? 'Adding...' : 'Add Data'}</button>
       </form>
     </div>
   )
