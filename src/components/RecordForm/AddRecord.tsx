@@ -1,6 +1,6 @@
 import './AddRecord.css'
 import { useForm } from 'react-hook-form'
-import { IRecord } from '../../models/Record.model'
+import { ACTIONS, IRecord } from '../../models/Record.model'
 import { RecordContext } from '../../App'
 import { useContext } from 'react'
 
@@ -17,10 +17,10 @@ export const AddRecord = () => {
     if (isValid) {
       if (selectedRecord) {
         data.id = selectedRecord.id; 
-        recordContext?.recordDispatch({ type: 'UPDATE_RECORD', payload: data });
+        recordContext?.recordDispatch({ type: ACTIONS.UPDATE_RECORD, payload: data });
       } else {
         data.id = Date.now(); 
-        recordContext?.recordDispatch({ type: 'ADD_RECORD', payload: data });
+        recordContext?.recordDispatch({ type: ACTIONS.ADD_RECORD, payload: data });
       }
       reset();
     } else {

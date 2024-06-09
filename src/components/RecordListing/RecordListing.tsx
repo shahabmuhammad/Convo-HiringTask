@@ -69,7 +69,7 @@ export const RecordListing = () => {
                         records={filteredRecords}
                         searchTerm={searchTerm}
                         sortBy={sortBy}
-                        setSelectedRecord={recordContext?.setSelectedRecord!}
+                        recordContext={recordContext}
                     />
                 </div>
             </div>

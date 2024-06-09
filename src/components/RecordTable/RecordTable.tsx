@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { IRecord } from '../../models/Record.model';
+import { ACTIONS, IRecord, IRecordContext } from '../../models/Record.model';
 import { RecordContext } from '../../App';
 
 interface RecordTableProps {
     records: IRecord[] | undefined;
     searchTerm: string;
     sortBy: 'date' | 'upvotes';
-    setSelectedRecord: (record: IRecord | null) => void; // Function to update selected record
+    recordContext: IRecordContext | null // Function to update selected record
 }
 
-export const RecordTable: React.FC<RecordTableProps> = ({ records, searchTerm, sortBy, setSelectedRecord }) => {
+export const RecordTable: React.FC<RecordTableProps> = ({ records, searchTerm, sortBy, recordContext }) => {
     const sortedRecords = records?.slice().sort((a, b) => {
         switch (sortBy) {
             case 'upvotes':
@@ -22,9 +22,12 @@ export const RecordTable: React.FC<RecordTableProps> = ({ records, searchTerm, s
     });
 
     const handleEditClick = (record:IRecord) => {
-        setSelectedRecord(record); 
+        recordContext?.setSelectedRecord(record); 
     };
-
+    
+    const handleDeleteClick = (record:IRecord)=>{
+        recordContext?.recordDispatch({type: ACTIONS.REMOVE_RECORD, payload: record})
+    }
     return (
         <table className="table">
             <thead>
@@ -45,7 +48,7 @@ export const RecordTable: React.FC<RecordTableProps> = ({ records, searchTerm, s
                             <td>
                                 <button type="button" className="btn btn-success btn-sm">View</button>
                                 <button type="button" className="btn btn-primary btn-sm mx-2" onClick={() => handleEditClick(record)}>Edit</button>
-                                <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDeleteClick(record)}>Delete</button>
                             </td>
                         </tr>
                     ))

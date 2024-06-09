@@ -27,7 +27,12 @@ const recordReducer = (state: IRecordState = initialState, action: any) => {
         return { ...state, records: updatedRecords };
       }
       return state;
-
+    case ACTIONS.REMOVE_RECORD:
+      const recordToDeleteId = action.payload.id;
+      const filteredRecords = state.records.filter(
+        (record) => record.id !== recordToDeleteId
+      );
+      return { ...state, records: filteredRecords };
     default:
       return state;
   }
